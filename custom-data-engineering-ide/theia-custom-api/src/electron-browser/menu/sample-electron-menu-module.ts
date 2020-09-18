@@ -17,7 +17,7 @@
 import { injectable, ContainerModule } from 'inversify';
 import { CompositeMenuNode } from '@theia/core/lib/common/menu';
 import { ElectronMainMenuFactory, ElectronMenuOptions } from '@theia/core/lib/electron-browser/menu/electron-main-menu-factory';
-import { PlaceholderMenuNode } from '../../browser/menu/sample-menu-contribution';
+import { PlaceholderMenuNode } from '../../browser/menu/custom-de-menu-contribution';
 
 export default new ContainerModule((bind, unbind, isBound, rebind) => {
     rebind(ElectronMainMenuFactory).to(SampleElectronMainMenuFactory).inSingletonScope();

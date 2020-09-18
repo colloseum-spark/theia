@@ -125,16 +125,16 @@
       "path": "../packages/workspace/compile.tsconfig.json"
     },
     {
-      "path": "../examples/api-samples/compile.tsconfig.json"
-    },
-    {
-      "path": "../examples/electron/compile.tsconfig.json"
-    },
-    {
       "path": "../packages/vsx-registry/compile.tsconfig.json"
     },
     {
       "path": "../packages/timeline/compile.tsconfig.json"
+    },
+    {
+      "path": "../custom-data-engineering-ide/electron/compile.tsconfig.json"
+    },
+    {
+      "path": "../custom-data-engineering-ide/theia-custom-api/compile.tsconfig.json"
     }
   ]
 }

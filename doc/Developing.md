@@ -165,7 +165,7 @@ From the package:
 
 ## Run the browser-based example application
 
-We can start the application from the [examples/browser](../examples/browser) directory with:
+We can start the application from the [examples/browser](custom-data-engineering-ide/browser) directory with:
 
     yarn run start
 
@@ -185,7 +185,7 @@ From the root directory run:
 This command rebuilds native Node.js packages against the version of Node.js
 used by Electron.
 
-It can also be started from the [examples/electron](../examples/electron) directory with:
+It can also be started from the [examples/electron](custom-data-engineering-ide/electron) directory with:
 
     yarn run start
 

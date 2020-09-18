@@ -19,14 +19,14 @@ import { Menu as MenuWidget } from '@phosphor/widgets';
 import { Disposable } from '@theia/core/lib/common/disposable';
 import { MenuNode, CompositeMenuNode } from '@theia/core/lib/common/menu';
 import { BrowserMainMenuFactory, MenuCommandRegistry, DynamicMenuWidget } from '@theia/core/lib/browser/menu/browser-menu-plugin';
-import { PlaceholderMenuNode } from './sample-menu-contribution';
+import { PlaceholderMenuNode } from './custom-de-menu-contribution';
 
 export default new ContainerModule((bind, unbind, isBound, rebind) => {
-    rebind(BrowserMainMenuFactory).to(SampleBrowserMainMenuFactory).inSingletonScope();
+    rebind(BrowserMainMenuFactory).to(CustomDEBrowserMainMenuFactory).inSingletonScope();
 });
 
 @injectable()
-class SampleBrowserMainMenuFactory extends BrowserMainMenuFactory {
+class CustomDEBrowserMainMenuFactory extends BrowserMainMenuFactory {
 
     protected handleDefault(menuCommandRegistry: MenuCommandRegistry, menuNode: MenuNode): void {
         if (menuNode instanceof PlaceholderMenuNode && menuCommandRegistry instanceof SampleMenuCommandRegistry) {

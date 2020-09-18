@@ -84,7 +84,7 @@ export class PluginPathsServiceImpl implements PluginPathsService {
             // if workspace is temporary
             // then let create a storage path for each set of workspace roots
             const rootsStr = rootUris.sort().join(',');
-            return this.createHash(rootsStr);
+            return crypto.createHash('md5').update(rootsStr).digest('hex');
         } else {
             let stat;
             try {
@@ -95,26 +95,8 @@ export class PluginPathsServiceImpl implements PluginPathsService {
                 displayName = displayName.slice(0, displayName.lastIndexOf('.'));
             }
 
-            return this.createHash(workspaceUri);
+            return crypto.createHash('md5').update(workspaceUri).digest('hex');
         }
-    }
-
-    /**
-     * Creates a hash digest of the given string.
-     */
-    protected createHash(str: string): string {
-        try {
-            // md5 is not FIPS-approved but we have to continue use it as there're existing storage folders based on it
-            return crypto.createHash('md5').update(str).digest('hex');
-        } catch (e) {
-            if (e.message.indexOf('disabled for FIPS') > -1) {
-                // SHA256 is FIPS-compliant
-                return crypto.createHash('sha256').update(str).digest('hex');
-            } else {
-                throw e;
-            }
-        }
-        // see more details in the issues 8378
     }
 
     /**

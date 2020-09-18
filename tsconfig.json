@@ -8,8 +8,8 @@
   "include": [
     "dev-packages/*/src",
     "packages/*/src",
-    "examples/*/src",
-    "examples/browser/src-gen"
+    "custom-data-engineering-ide/*/src",
+    "custom-data-engineering-ide/browser/src-gen"
   ],
   "compilerOptions": {
     "allowJs": true,
@@ -146,16 +146,16 @@
         "packages/workspace/src/*"
       ],
       "@theia/api-samples/lib/*": [
-        "examples/api-samples/src/*"
+        "custom-data-engineering-ide/api-samples/src/*"
       ],
       "@theia/api-tests/*": [
-        "examples/api-tests/*"
+        "custom-data-engineering-ide/api-tests/*"
       ],
       "@theia/example-browser/*": [
-        "examples/browser/*"
+        "custom-data-engineering-ide/browser/*"
       ],
       "@theia/example-electron/*": [
-        "examples/electron/*"
+        "custom-data-engineering-ide/electron/*"
       ],
       "@theia/vsx-registry/lib/*": [
         "packages/vsx-registry/src/*"
@@ -168,6 +168,18 @@
       ],
       "@theia/timeline/*": [
         "packages/timeline/*"
+      ],
+      "@theia/theia-custom-api-tests/*": [
+        "custom-data-engineering-ide/theia-custom-api-tests/*"
+      ],
+      "@theia/theia-custom-api/lib/*": [
+        "custom-data-engineering-ide/theia-custom-api/src/*"
+      ],
+      "@theia/custom-data-engineering-ide-browser/*": [
+        "custom-data-engineering-ide/browser/*"
+      ],
+      "@theia/custom-data-engineering-ide-electron/*": [
+        "custom-data-engineering-ide/electron/*"
       ]
     }
   }

@@ -1,5 +1,5 @@
 {
-  "name": "@theia/api-tests",
+  "name": "@theia/theia-custom-api-tests",
   "version": "1.5.0",
   "description": "Theia API tests",
   "dependencies": {

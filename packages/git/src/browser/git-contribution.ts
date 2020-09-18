@@ -39,6 +39,18 @@ export namespace GIT_COMMANDS {
         id: 'git.clone',
         label: 'Git: Clone...'
     };
+    export const SCALASPARKCLONE = {
+        id: 'git.scalasparkclone',
+        label: 'SCALA SPARK ETL Pipeline'
+    };
+    export const PYSPARKCLONE = {
+        id: 'git.pysparkclone',
+        label: 'PYSPARK ETL Pipeline'
+    };
+    export const SQLSPARKCLONE = {
+        id: 'git.sqlsparkclone',
+        label: 'SQL SPARK ETL Pipeline'
+    };
     export const FETCH = {
         id: 'git.fetch',
         label: 'Git: Fetch...'
@@ -398,6 +410,21 @@ export class GitContribution implements CommandContribution, MenuContribution, T
             isEnabled: () => this.workspaceService.opened,
             execute: (url?: string, folder?: string, branch?: string) =>
                 this.quickOpenService.clone(url, folder, branch)
+        });
+        registry.registerCommand(GIT_COMMANDS.SCALASPARKCLONE, {
+            isEnabled: () => this.workspaceService.opened,
+            execute: (folder?: string, branch?: string) =>
+                this.quickOpenService.clone('https://github.com/abhishekvermax/spark-scala-data-engineering-framework.git', folder, branch)
+        });
+        registry.registerCommand(GIT_COMMANDS.PYSPARKCLONE, {
+            isEnabled: () => this.workspaceService.opened,
+            execute: (folder?: string, branch?: string) =>
+                this.quickOpenService.clone('', folder, branch)
+        });
+        registry.registerCommand(GIT_COMMANDS.SQLSPARKCLONE, {
+            isEnabled: () => this.workspaceService.opened,
+            execute: (folder?: string, branch?: string) =>
+                this.quickOpenService.clone('', folder, branch)
         });
         registry.registerCommand(GIT_COMMANDS.COMMIT, {
             execute: () => this.withProgress(() => this.commit()),

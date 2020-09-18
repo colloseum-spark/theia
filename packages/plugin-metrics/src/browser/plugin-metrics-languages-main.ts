@@ -284,9 +284,9 @@ export class LanguagesMainPluginMetrics extends LanguagesMainImpl {
         super.$registerDocumentFormattingSupport(handle, pluginInfo, selector);
     }
 
-    $registerRangeFormattingSupport(handle: number, pluginInfo: PluginInfo, selector: SerializedDocumentFilter[]): void {
+    $registerRangeFormattingProvider(handle: number, pluginInfo: PluginInfo, selector: SerializedDocumentFilter[]): void {
         this.registerPluginWithFeatureHandle(handle, pluginInfo.id);
-        super.$registerRangeFormattingSupport(handle, pluginInfo, selector);
+        super.$registerRangeFormattingProvider(handle, pluginInfo, selector);
     }
 
     $registerOnTypeFormattingProvider(handle: number, pluginInfo: PluginInfo, selector: SerializedDocumentFilter[], autoFormatTriggerCharacters: string[]): void {

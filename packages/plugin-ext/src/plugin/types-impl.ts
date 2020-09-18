@@ -25,6 +25,7 @@
 import { UUID } from '@phosphor/coreutils/lib/uuid';
 import { illegalArgument } from '../common/errors';
 import * as theia from '@theia/plugin';
+import * as crypto from 'crypto';
 import { URI } from 'vscode-uri';
 import { relative } from '../common/paths-util';
 import { startsWithIgnoreCase } from '@theia/core/lib/common/strings';
@@ -772,11 +773,6 @@ export enum DiagnosticSeverity {
     Hint = 3
 }
 
-export enum DebugConsoleMode {
-    Separate = 0,
-    MergeWithParent = 1
-}
-
 export class DiagnosticRelatedInformation {
     location: Location;
     message: string;
@@ -1405,14 +1401,6 @@ export enum ProgressLocation {
     Notification = 15
 }
 
-function computeTaskExecutionId(values: string[]): string {
-    let id: string = '';
-    for (let i = 0; i < values.length; i++) {
-        id += values[i].replace(/,/g, ',,') + ',';
-    }
-    return id;
-}
-
 export class ProcessExecution {
     private executionProcess: string;
     private arguments: string[];
@@ -1469,17 +1457,17 @@ export class ProcessExecution {
     }
 
     public computeId(): string {
-        const props: string[] = [];
-        props.push('process');
+        const hash = crypto.createHash('md5');
+        hash.update('process');
         if (this.executionProcess !== undefined) {
-            props.push(this.executionProcess);
+            hash.update(this.executionProcess);
         }
         if (this.arguments && this.arguments.length > 0) {
             for (const arg of this.arguments) {
-                props.push(arg);
+                hash.update(arg);
             }
         }
-        return computeTaskExecutionId(props);
+        return hash.digest('hex');
     }
 
     public static is(value: theia.ShellExecution | theia.ProcessExecution): boolean {
@@ -1574,20 +1562,20 @@ export class ShellExecution {
     }
 
     public computeId(): string {
-        const props: string[] = [];
-        props.push('shell');
+        const hash = crypto.createHash('md5');
+        hash.update('shell');
         if (this.shellCommandLine !== undefined) {
-            props.push(this.shellCommandLine);
+            hash.update(this.shellCommandLine);
         }
         if (this.shellCommand !== undefined) {
-            props.push(typeof this.shellCommand === 'string' ? this.shellCommand : this.shellCommand.value);
+            hash.update(typeof this.shellCommand === 'string' ? this.shellCommand : this.shellCommand.value);
         }
         if (this.arguments && this.arguments.length > 0) {
             for (const arg of this.arguments) {
-                props.push(typeof arg === 'string' ? arg : arg.value);
+                hash.update(typeof arg === 'string' ? arg : arg.value);
             }
         }
-        return computeTaskExecutionId(props);
+        return hash.digest('hex');
     }
 
     public static is(value: theia.ShellExecution | theia.ProcessExecution): boolean {

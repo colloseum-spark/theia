@@ -12,9 +12,6 @@
       "path": "../../dev-packages/cli/compile.tsconfig.json"
     },
     {
-      "path": "../api-samples/compile.tsconfig.json"
-    },
-    {
       "path": "../../packages/callhierarchy/compile.tsconfig.json"
     },
     {
@@ -121,6 +118,9 @@
     },
     {
       "path": "../../packages/timeline/compile.tsconfig.json"
+    },
+    {
+      "path": "../theia-custom-api/compile.tsconfig.json"
     }
   ]
 }

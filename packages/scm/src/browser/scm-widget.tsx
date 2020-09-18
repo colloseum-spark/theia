@@ -150,11 +150,7 @@ export class ScmWidget extends BaseWidget implements StatefulWidget {
     protected onActivateRequest(msg: Message): void {
         super.onActivateRequest(msg);
         this.refresh();
-        if (this.commitWidget.isVisible) {
-            this.commitWidget.focus();
-        } else {
-            this.node.focus();
-        }
+        this.commitWidget.focus();
     }
 
     protected focusInput(): void {

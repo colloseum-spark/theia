@@ -196,7 +196,7 @@ export class OutputChannelManager implements CommandContribution, Disposable, Re
             this.textModelService.createModelReference(uri).then(ref => editorModelRef.resolve(ref));
         }
 
-        const channel = this.createChannel(resource);
+        const channel = new OutputChannel(resource, this.preferences);
         this.channels.set(name, channel);
         this.toDisposeOnChannelDeletion.set(name, this.registerListeners(channel));
         this.channelAddedEmitter.fire(channel);
@@ -306,10 +306,6 @@ export class OutputChannelManager implements CommandContribution, Disposable, Re
         return new OutputResource(uri, editorModelRef);
     }
 
-    protected createChannel(resource: OutputResource): OutputChannel {
-        return new OutputChannel(resource, this.preferences);
-    }
-
 }
 
 export enum OutputChannelSeverity {
@@ -320,21 +316,20 @@ export enum OutputChannelSeverity {
 
 export class OutputChannel implements Disposable {
 
-    protected readonly contentChangeEmitter = new Emitter<void>();
-    protected readonly visibilityChangeEmitter = new Emitter<{ isVisible: boolean, preserveFocus?: boolean }>();
-    protected readonly disposedEmitter = new Emitter<void>();
-    protected readonly textModifyQueue = new PQueue({ autoStart: true, concurrency: 1 });
-    protected readonly toDispose = new DisposableCollection(
-        Disposable.create(() => this.textModifyQueue.clear()),
+    private readonly contentChangeEmitter = new Emitter<void>();
+    private readonly visibilityChangeEmitter = new Emitter<{ isVisible: boolean, preserveFocus?: boolean }>();
+    private readonly disposedEmitter = new Emitter<void>();
+    private readonly toDispose = new DisposableCollection(
         this.contentChangeEmitter,
         this.visibilityChangeEmitter,
         this.disposedEmitter
     );
 
-    protected disposed = false;
-    protected visible = true;
-    protected _maxLineNumber: number;
-    protected decorationIds = new Set<string>();
+    private disposed = false;
+    private visible = true;
+    private _maxLineNumber: number;
+    private decorationIds = new Set<string>();
+    private textModifyQueue = new PQueue({ autoStart: true, concurrency: 1 });
 
     readonly onVisibilityChange: Event<{ isVisible: boolean, preserveFocus?: boolean }> = this.visibilityChangeEmitter.event;
     readonly onContentChange: Event<void> = this.contentChangeEmitter.event;

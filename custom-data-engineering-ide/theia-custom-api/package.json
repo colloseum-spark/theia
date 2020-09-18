@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@theia/api-samples",
+  "name": "@theia/theia-custom-api",
   "version": "1.5.0",
   "description": "Theia - Example code to demonstrate Theia API",
   "dependencies": {
@@ -9,10 +9,10 @@
   },
   "theiaExtensions": [
     {
-      "frontend": "lib/browser/api-samples-frontend-module"
+      "frontend": "lib/browser/theia-custom-api-frontend-module"
     },
     {
-      "frontend": "lib/browser/menu/sample-browser-menu-module",
+      "frontend": "lib/browser/menu/custom-de-browser-menu-module",
       "frontendElectron": "lib/electron-browser/menu/sample-electron-menu-module"
     },
     {

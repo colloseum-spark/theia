@@ -14,52 +14,29 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
-import { Command, CommandContribution, CommandRegistry, MAIN_MENU_BAR, MenuContribution, MenuModelRegistry, MenuNode, SubMenuOptions } from '@theia/core/lib/common';
+import { Command, MAIN_MENU_BAR, MenuContribution, MenuModelRegistry, MenuNode, SubMenuOptions } from '@theia/core/lib/common';
 import { injectable, interfaces } from 'inversify';
 
 const SampleCommand: Command = {
-    id: 'sample-command',
-    label: 'Sample Command'
+    id: 'git.scalasparkclone'
 };
 const SampleCommand2: Command = {
-    id: 'sample-command2',
-    label: 'Sample Command2'
+    id: 'git.pysparkclone'
+};
+const SampleCommand3: Command = {
+    id: 'git.sqlsparkclone'
 };
 
 @injectable()
-export class SampleCommandContribution implements CommandContribution {
-    registerCommands(commands: CommandRegistry): void {
-        commands.registerCommand(SampleCommand, {
-            execute: () => {
-                alert('This is a sample command!');
-            }
-        });
-        commands.registerCommand(SampleCommand2, {
-            execute: () => {
-                alert('This is sample command2!');
-            }
-        });
-    }
-
-}
-
-@injectable()
-export class SampleMenuContribution implements MenuContribution {
+export class CustomDeMenuContribution implements MenuContribution {
     registerMenus(menus: MenuModelRegistry): void {
-        const subMenuPath = [...MAIN_MENU_BAR, 'sample-menu'];
-        menus.registerSubmenu(subMenuPath, 'Sample Menu', {
+        const subMenuPath = [...MAIN_MENU_BAR, 'data-engineering-menu'];
+        menus.registerSubmenu(subMenuPath, 'Data Engineering', {
             order: '2' // that should put the menu right next to the File menu
         });
-        menus.registerMenuAction(subMenuPath, {
-            commandId: SampleCommand.id,
-            order: '0'
-        });
-        menus.registerMenuAction(subMenuPath, {
-            commandId: SampleCommand2.id,
-            order: '2'
-        });
-        const subSubMenuPath = [...subMenuPath, 'sample-sub-menu'];
-        menus.registerSubmenu(subSubMenuPath, 'Sample sub menu', { order: '2' });
+
+        const subSubMenuPath = [...subMenuPath, 'data-engineering-sub-menu'];
+        menus.registerSubmenu(subSubMenuPath, 'Choose Project Type', { order: '2' });
         menus.registerMenuAction(subSubMenuPath, {
             commandId: SampleCommand.id,
             order: '1'
@@ -68,7 +45,11 @@ export class SampleMenuContribution implements MenuContribution {
             commandId: SampleCommand2.id,
             order: '3'
         });
-        const placeholder = new PlaceholderMenuNode([...subSubMenuPath, 'placeholder'].join('-'), 'Placeholder', { order: '0' });
+        menus.registerMenuAction(subSubMenuPath, {
+            commandId: SampleCommand3.id,
+            order: '4'
+        });
+        const placeholder = new PlaceholderMenuNode([...subSubMenuPath, 'placeholder'].join('-'), 'Project Types', { order: '0' });
         menus.registerMenuNode(subSubMenuPath, placeholder);
     }
 
@@ -91,7 +72,7 @@ export class PlaceholderMenuNode implements MenuNode {
 
 }
 
-export const bindSampleMenu = (bind: interfaces.Bind) => {
-    bind(CommandContribution).to(SampleCommandContribution).inSingletonScope();
-    bind(MenuContribution).to(SampleMenuContribution).inSingletonScope();
+export const bindCustomDEMenu = (bind: interfaces.Bind) => {
+    // bind(CommandContribution).to(SampleCommandContribution).inSingletonScope();
+    bind(MenuContribution).to(CustomDeMenuContribution).inSingletonScope();
 };
